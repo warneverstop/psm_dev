@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
+        <setting name="useGeneratedKeys" value="true" />
+
+        <!-- 开启驼峰命名转换:Table{create_time} -> Entity{createTime} -->
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+
+        <!--全局映射器启用缓存-->
+        <!--<setting name="cacheEnabled" value="true"/>-->
+
+        <!--&lt;!&ndash; 查询时，关闭关联对象即时加载以提高性能 &ndash;&gt;-->
+        <!--<setting name="lazyLoadingEnabled" value="false"/>-->
+
+        <!--&lt;!&ndash; 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果 &ndash;&gt;-->
+        <!--<setting name="multipleResultSetsEnabled" value="true"/>-->
+
+        <!--&lt;!&ndash; 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指 定)，不会加载关联表的所有字段，以提高性能 &ndash;&gt;-->
+        <!--<setting name="aggressiveLazyLoading" value="true"/>-->
+    </settings>
+    <typeAliases>
+        <package name="com.psm.dto"/>
+    </typeAliases>
+
+</configuration>
