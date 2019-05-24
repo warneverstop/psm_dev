@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.UserInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="genter" jdbcType="VARCHAR" property="genter" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_user" jdbcType="VARCHAR" property="addUser" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+  </resultMap>
+  <resultMap id="getAllMap" type="com.psm.dto.UserInfo">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="genter" jdbcType="VARCHAR" property="genter" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_user" jdbcType="VARCHAR" property="addUser" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+  </resultMap>
+
+  <select id="selectForLogin" parameterType="com.psm.dto.UserInfo" resultMap="getAllMap">
+    SELECT u.*,r.role_name
+    from user_info u LEFT JOIN role_info r on u.role_id = r.role_id
+    where u.user_name = #{userName} and u.`password` = #{password} and u.state = 1
+  </select>
+
+  <select id="selectAllInfo" resultMap="getAllMap">
+    SELECT u.*,r.role_name
+    from user_info u LEFT JOIN role_info r on u.role_id = r.role_id
+  </select>
+</mapper>

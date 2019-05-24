@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.PowerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.PowerInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="power_id" jdbcType="INTEGER" property="powerId" />
+    <result column="power_name" jdbcType="VARCHAR" property="powerName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+
+  <select id="selectByRoleId" resultMap="BaseResultMap" parameterType="integer">
+    select p.*
+    from power_info p left JOIN role_power_info rp on  p.power_id = rp.power_id
+    where rp.role_id = #{roleId}
+  </select>
+</mapper>

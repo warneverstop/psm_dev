@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.RolePowerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.RolePowerInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="power_id" jdbcType="INTEGER" property="powerId" />
+  </resultMap>
+
+  <select id="selectByRoleId" resultMap="BaseResultMap" parameterType="integer">
+    SELECT
+      *
+    FROM
+      role_power_info rp
+    WHERE
+      rp.role_id = #{roleId}
+  </select>
+</mapper>

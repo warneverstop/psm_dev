@@ -27,7 +27,7 @@
     </bean>
 
     <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.shm.mapper"/>
+        <property name="basePackage" value="com.psm.mapper"/>
     </bean>
 
     <!-- 配置一个可以批量执行的sqlSession -->
