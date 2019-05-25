@@ -15,4 +15,6 @@ public interface IPowerService {
      * @return
      */
     List<PowerInfo> selectByRoleId(Integer roleId);
- }
+
+    List<PowerInfo> selectAll();
+}

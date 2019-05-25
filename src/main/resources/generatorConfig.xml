@@ -40,8 +40,8 @@
         <javaClientGenerator targetPackage="com.psm.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <table tableName="role_power_info">
-            <generatedKey column="id" sqlStatement="JDBC"/>
+        <table tableName="course_info">
+            <generatedKey column="course_id" sqlStatement="JDBC"/>
         </table>
     </context>
 </generatorConfiguration>

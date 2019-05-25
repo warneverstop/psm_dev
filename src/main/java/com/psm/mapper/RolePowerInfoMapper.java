@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RolePowerInfoMapper extends Mapper<RolePowerInfo> {
     List<RolePowerInfo> selectByRoleId(Integer roleId);
+
+    void deleteByRoleId(Integer roleId);
 }

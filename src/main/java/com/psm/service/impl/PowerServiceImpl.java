@@ -20,4 +20,9 @@ public class PowerServiceImpl implements IPowerService {
     public List<PowerInfo> selectByRoleId(Integer roleId) {
         return powerInfoMapper.selectByRoleId(roleId);
     }
+
+    @Override
+    public List<PowerInfo> selectAll() {
+        return powerInfoMapper.selectAll();
+    }
 }

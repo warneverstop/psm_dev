@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: su
-  Date: 2019/5/23
-  Time: 16:47
+  Date: 2019/5/24
+  Time: 16:17
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户管理</title>
+    <title>班级管理</title>
 
     <link rel="shortcut icon" href="${ctx}/favicon.ico">
     <link href="${ctx}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
@@ -30,58 +30,68 @@
 </head>
 
 <body class="gray-bg">
-<!-- 用户修改的模态框 -->
-<div class="modal fade" id="userEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- 修改的模态框 -->
+<div class="modal fade" id="objectEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabe2">用户修改</h4>
+                <h4 class="modal-title" id="myModalLabe2">班级修改</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <input type="hidden" name="userId" id="userId_edit_input">
+                    <input type="hidden" name="classId" id="classId_edit_input">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">用户名：</label>
+                        <label class="col-sm-3 control-label">班级：</label>
                         <div class="col-sm-9">
-                            <input type="text" name="userName" class="form-control" id="userName_edit_input" >
+                            <input type="text" name="classNumber" class="form-control" id="classNumber_edit_input" >
                             <span class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">性别：</label>
+                        <label class="col-sm-3 control-label">学院：</label>
                         <div class="col-sm-9">
-                            <select name="genter" class="form-control" id="genter_edit_input">
-                                <option value="男">男</option>
-                                <option value="女">女</option>
-                            </select>
+                            <input type="text" name="college" class="form-control" id="college_edit_input" >
                             <span class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">联系方式：</label>
+                        <label class="col-sm-3 control-label">专业：</label>
                         <div class="col-sm-9">
-                            <input type="text" name="phone" class="form-control" id="phone_edit_input" >
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">状态：</label>
-                        <div class="col-sm-9">
-                            <select name="state" class="form-control" id="state_edit_input">
-                                <option value="1">正常</option>
-                                <option value="0">不可用</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">角色：</label>
-                        <div class="col-sm-9">
-                            <select name="roleId" class="form-control" id="roleId_edit_input">
-                                <c:forEach items="${roleList}" var="role">
-                                    <option value="${role.roleId}">${role.roleName}</option>
+                            <select name="majorId" class="form-control" id="majorId_edit_input">
+                                <c:forEach items="${majorList}" var="major">
+                                    <option value="${major.majorId}">${major.majorName}</option>
                                 </c:forEach>
                             </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">班主任：</label>
+                        <div class="col-sm-9">
+                            <select name="teacherId" class="form-control" id="teacherId_edit_input">
+                                <c:forEach items="${teacherList}" var="teacher">
+                                    <option value="${teacher.teacherId}">${teacher.teacherName}</option>
+                                </c:forEach>
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">班长：</label>
+                        <div class="col-sm-9">
+                            <select name="studentId" class="form-control" id="studentId_edit_input">
+                                <c:forEach items="${studentList}" var="student">
+                                    <option value="${student.studentId}">${student.studentName}</option>
+                                </c:forEach>
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">总人数：</label>
+                        <div class="col-sm-9">
+                            <input type="number" name="sumPeople" class="form-control" id="sumPeople_edit_input" min="0" max="100">
                             <span class="help-block"></span>
                         </div>
                     </div>
@@ -96,63 +106,55 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="user_edit_btn">保存</button>
+                <button type="button" class="btn btn-primary" id="object_edit_btn">保存</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 用户添加的模态框 -->
-<div class="modal fade" id="userAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- 添加的模态框 -->
+<div class="modal fade" id="objectAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">用户添加</h4>
+                <h4 class="modal-title" id="myModalLabel">班级添加</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">用户名：</label>
+                        <label class="col-sm-3 control-label">班级：</label>
                         <div class="col-sm-9">
-                            <input type="text" name="userName" class="form-control" id="userName_add_input" placeholder="张三">
+                            <input type="text" name="classNumber" class="form-control" placeholder="15090441">
                             <span class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">性别：</label>
+                        <label class="col-sm-3 control-label">学院：</label>
                         <div class="col-sm-9">
-                            <select name="genter" class="form-control">
-                                <option value="男">男</option>
-                                <option value="女">女</option>
-                            </select>
+                            <input type="text" name="college" class="form-control" placeholder="经济与管理学院">
                             <span class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">联系方式：</label>
+                        <label class="col-sm-3 control-label">专业：</label>
                         <div class="col-sm-9">
-                            <input type="text" name="phone" class="form-control" id="phone" placeholder="182********">
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">状态：</label>
-                        <div class="col-sm-9">
-                            <select name="state" class="form-control">
-                                <option value="1">正常</option>
-                                <option value="0">不可用</option>
-                            </select>
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">角色：</label>
-                        <div class="col-sm-9">
-                            <select name="roleId" class="form-control">
+                            <select name="majorId" class="form-control">
                                 <option style='display: none'></option>
-                                <c:forEach items="${roleList}" var="role">
-                                    <option value="${role.roleId}">${role.roleName}</option>
+                                <c:forEach items="${majorList}" var="major">
+                                    <option value="${major.majorId}">${major.majorName}</option>
+                                </c:forEach>
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">班主任：</label>
+                        <div class="col-sm-9">
+                            <select name="teacherId" class="form-control">
+                                <option style='display: none'></option>
+                                <c:forEach items="${teacherList}" var="teacher">
+                                    <option value="${teacher.teacherId}">${teacher.teacherName}</option>
                                 </c:forEach>
                             </select>
                             <span class="help-block"></span>
@@ -169,7 +171,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="user_save_btn">保存</button>
+                <button type="button" class="btn btn-primary" id="object_save_btn">保存</button>
             </div>
         </div>
     </div>
@@ -181,7 +183,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <button type="button" class="btn btn-primary" id="addUser">添加</button>
+                    <button type="button" class="btn btn-primary" id="addObject">添加</button>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -196,36 +198,29 @@
                     <table id="table-id" class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <th style="">用户名</th>
-                            <th style="">性别</th>
-                            <th style="">联系方式</th>
-                            <th style="">添加时间</th>
-                            <th style="">添加人</th>
-                            <th>状态</th>
-                            <th style="">角色</th>
+                            <th style="">班级</th>
+                            <th style="">专业</th>
+                            <th style="">学院</th>
+                            <th style="">班主任</th>
+                            <th style="">班长</th>
+                            <th>总人数</th>
                             <th style="">备注</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="userInfo" items="${userList}">
+                        <c:forEach var="classInfo" items="${classList}">
                             <tr class="gradeX">
-                                <td>${userInfo.userName}</td>
-                                <td>${userInfo.genter}</td>
-                                <td>${userInfo.phone}</td>
-                                <td><fmt:formatDate value="${userInfo.addTime}" type="both"/></td>
-                                <td>${userInfo.addUser}</td>
+                                <td>${classInfo.classNumber}</td>
+                                <td>${classInfo.majorName}</td>
+                                <td>${classInfo.college}</td>
+                                <td>${classInfo.teacherName}</td>
+                                <td>${classInfo.studentName}</td>
+                                <td>${classInfo.sumPeople}</td>
+                                <td>${classInfo.remarks}</td>
                                 <td>
-                                    <c:if test="${userInfo.state == 0}">不可用</c:if>
-                                    <c:if test="${userInfo.state == 1}">正常</c:if>
-                                </td>
-                                <td>${userInfo.roleName}</td>
-                                <td>${userInfo.remarks}</td>
-                                <td>
-                                    <c:if test="${userInfo.userId != 1}">
-                                        <button type="button" class="btn btn-warning btn-xs" onclick="editUser(${userInfo.userId})">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs" onclick="deleteUser(${userInfo.userId})">删除</button>
-                                    </c:if>
+                                    <button type="button" class="btn btn-warning btn-xs" onclick="editObject(${classInfo.classId})">修改</button>
+                                    <button type="button" class="btn btn-danger btn-xs" onclick="deleteObject(${classInfo.classId})">删除</button>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -259,26 +254,27 @@
     function reset_form(ele){
         $(ele)[0].reset();
     }
-    //添加用户按钮
-    $("#addUser").click(function () {
-        reset_form("#userAddModal form");
-        $("#userAddModal").modal({
+    //添加按钮
+    $("#addObject").click(function () {
+        reset_form("#objectAddModal form");
+        $("#objectAddModal").modal({
             backdrop:"static"
         });
     });
     //保存按钮
-    $("#user_save_btn").click(function () {
-        var userDate = $("#userAddModal form").serialize();
-        console.info(userDate);
+    $("#object_save_btn").click(function () {
+        var addFormDate = $("#objectAddModal form").serialize();
+        console.info(addFormDate);
         $.ajax({
-            url:"${ctx}/user/save",
+            url:"${ctx}/class/save",
             type:"POST",
-            data:userDate,
+            data:addFormDate,
             success:function (data) {
                 if(data.code == 100){
-                    $("#userAddModal").modal('hide');
-                    layer.msg(data.msg);
-                    window.location.reload();
+                    $("#objectAddModal").modal('hide');
+                    layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                        window.location.reload();
+                    });
                 }else{
                     layer.msg(data.msg)
                 }
@@ -286,50 +282,49 @@
         })
     });
 
-    //修改用户信息
-    function editUser(userId){
-        reset_form("#userEditModal form");
-        setEditModalData(userId);
-        $("#userEditModal").modal({
+    //修改对象信息
+    function editObject(id){
+        reset_form("#objectEditModal form");
+        setEditModalData(id);
+        $("#objectEditModal").modal({
             backdrop:"static"
         });
     }
 
-    function setEditModalData(userId){
+    function setEditModalData(id){
         $.ajax({
-            url:"${ctx}/user/selectById",
+            url:"${ctx}/class/selectById",
             type:"POST",
-            data:{"userId":userId},
+            data:{"classId":id},
             async:false,
             success:function (data) {
                 console.info(data);
-                var userInfo = data.extend.userInfo;
-                $("#userId_edit_input").val(userInfo.userId);
-                $("#userName_edit_input").val(userInfo.userName);
-                $("#genter_edit_input").val(userInfo.genter);
-                //$("#genter_edit_input").find("option:contains('"+userInfo.genter+"')").attr("selected",true);
-                $("#phone_edit_input").val(userInfo.phone);
-                $("#state_edit_input").val(userInfo.state);
-                $("#roleId_edit_input").val(userInfo.roleId);
-                //$("#state_edit_input").find("option:contains('"+userInfo.state+"')").attr("selected",true);
-                //$("#roleId_edit_input").find("option:contains('2')").attr("selected",true);
-                $("#remarks_edit_input").val(userInfo.remarks);
+                var classInfo = data.extend.classInfo;
+                $("#classId_edit_input").val(classInfo.classId);
+                $("#classNumber_edit_input").val(classInfo.classNumber);
+                $("#college_edit_input").val(classInfo.college);
+                $("#majorId_edit_input").val(classInfo.majorId);
+                $("#teacherId_edit_input").val(classInfo.teacherId);
+                $("#studentId_edit_input").val(classInfo.studentId);
+                $("#sumPeople_edit_input").val(classInfo.sumPeople);
+                $("#remarks_edit_input").val(classInfo.remarks);
             }
         })
     }
 
-    $("#user_edit_btn").click(function () {
-        var userData = $("#userEditModal form").serialize();
-        console.info(userData);
+    $("#object_edit_btn").click(function () {
+        var editFormData = $("#objectEditModal form").serialize();
+        console.info(editFormData);
         $.ajax({
-            url:"${ctx}/user/save",
+            url:"${ctx}/class/save",
             type:"POST",
-            data:userData,
+            data:editFormData,
             success:function (data) {
                 if(data.code == 100){
-                    $("#userEditModal").modal('hide');
-                    layer.msg(data.msg);
-                    window.location.reload();
+                    $("#objectEditModal").modal('hide');
+                    layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                        window.location.reload();
+                    });
                 }else{
                     layer.msg(data.msg)
                 }
@@ -337,17 +332,18 @@
         })
     });
 
-    function deleteUser(userId){
+    function deleteObject(id){
         layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
             $.ajax({
-                url:"${ctx}/user/delete",
+                url:"${ctx}/class/delete",
                 type:"POST",
-                data:{"userId":userId},
+                data:{"classId":id},
                 async:false,
                 success:function (data) {
                     if(data.code == 100){
-                        layer.msg(data.msg);
-                        window.location.reload();
+                        layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                            window.location.reload();
+                        });
                     }else{
                         layer.msg(data.msg)
                     }
@@ -363,4 +359,5 @@
 </body>
 
 </html>
+
 

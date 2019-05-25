@@ -17,4 +17,12 @@ public interface IRolePowerService {
      * @return
      */
     List<RolePowerInfo> selectByRoleId(Integer roleId);
+
+    /**
+     * 更新权限，先删除该角色下的所有权限，然后再添加
+     * @param powerIds
+     * @param roleId
+     * @return
+     */
+    boolean updateRolePower(Integer[] powerIds, Integer roleId);
 }

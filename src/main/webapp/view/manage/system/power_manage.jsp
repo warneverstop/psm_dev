@@ -36,88 +36,35 @@
                 <div class="ibox-title">
                     <h5>权限列表</h5>
                     <div class="ibox-tools" style="margin-top:-3px;">
-                        <button type="button" class="btn btn-primary btn-xs">保存权限</button>
+                        <button type="button" class="btn btn-primary btn-xs" id="back_btn">返回</button>
+                        <button type="button" class="btn btn-primary btn-xs" id="save_power">保存权限</button>
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <form>
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
                             <th style="width:60px;">编号</th>
-                            <th style="width:80px;">操作对象</th>
-                            <th>权限</th>
-                            <th class="text-center" style="width:80px;">全选</th>
+                            <th style="width:80px;">权限名</th>
+                            <th>说明</th>
+                            <th class="text-center" style="width:80px;">选择</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td>个人信息</td>
-                            <td>
-                                <label>
-                                    <input type="checkbox">查看页面
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <input type="checkbox">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>2</td>
-                            <td>成员管理</td>
-                            <td>
-                                <label>
-                                    <input type="checkbox">查看页面
-                                    <input type="checkbox">编辑用户
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <input type="checkbox">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>3</td>
-                            <td>角色管理</td>
-                            <td>
-                                <label>
-                                    <input type="checkbox">查看页面
-                                    <input type="checkbox">编辑角色
-                                    <input type="checkbox">权限分配
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <input type="checkbox">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>4</td>
-                            <td>班级管理</td>
-                            <td>
-                                <label>
-                                    <input type="checkbox">查看页面
-                                    <input type="checkbox">编辑班级
-                                    <input type="checkbox">查看详情
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <input type="checkbox">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>5</td>
-                            <td>班级明细</td>
-                            <td>
-                                <label>
-                                    <input type="checkbox">查看页面
-                                    <input type="checkbox">编辑成员
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <input type="checkbox">
-                            </td>
-                        </tr>
+                        <c:forEach items="${powerList}" var="power">
+                            <tr class="gradeX">
+                                <td>${power.powerId}</td>
+                                <td>${power.powerName}</td>
+                                <td>${power.remark}</td>
+                                <td class="text-center">
+                                    <input type="checkbox" id="${power.powerId}" name="power" value="${power.powerId}">
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -135,13 +82,45 @@
 
 <!-- 自定义js -->
 <script src="${ctx}/js/content.js?v=1.0.0"></script>
+<script type="text/javascript" src="${ctx}/dist/layer-v3.1.1/layer/layer.js"></script>
 
 
 <!-- Page-Level Scripts -->
 <script>
     $(document).ready(function () {
         $('.dataTables-example').dataTable();
+
+        <c:forEach items="${havePowerList}" var="havePower">
+            $('#${havePower.powerId}').attr('checked',true)
+        </c:forEach>
     });
+
+    $("#back_btn").click(function () {
+        window.location.href = "${ctx}/role/select";
+    });
+
+    $("#save_power").click(function () {
+        var powerIds = [];
+        $("input:checkbox[name='power']:checked").each(function(){
+            //操作
+            var powerId = $(this).val();
+            powerIds.push(powerId);
+        });
+        updateRolePower(powerIds);
+    });
+
+    function updateRolePower(powerIds) {
+        var roleId = ${roleId};
+        $.ajax({
+            url:"${ctx}/power/updateRolePower",
+            type:"POST",
+            traditional: true,//使ajax支持数组数据
+            data:{'powerIds':powerIds,'roleId':roleId},
+            success:function (data) {
+                layer.msg(data.msg);
+            }
+        })
+    }
 </script>
 
 </body>

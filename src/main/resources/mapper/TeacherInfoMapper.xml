@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.TeacherInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.TeacherInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="teacher_number" jdbcType="VARCHAR" property="teacherNumber" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="genter" jdbcType="VARCHAR" property="genter" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="background" jdbcType="VARCHAR" property="background" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="office_address" jdbcType="VARCHAR" property="officeAddress" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="personal_profile" jdbcType="VARCHAR" property="personalProfile" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del" jdbcType="INTEGER" property="del" />
+  </resultMap>
+
+  <select id="selectAllInfo" resultMap="BaseResultMap">
+    select *
+    from teacher_info
+    where del = 1
+  </select>
+</mapper>

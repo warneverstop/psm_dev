@@ -80,7 +80,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">生日：</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text"  class="form-control" name="birthday" value="${user.birthday}" disabled>
+                                                    <input type="date"  class="form-control" name="birthday" value="${user.birthday}" disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -171,9 +171,9 @@
 </body>
 <script>
     $("#basic_edit").click(function () {
-        $("#basic_form input").removeAttrs("disabled");
-        $("#basic_save").removeAttrs("disabled");
-        $("#basic_remove").removeAttrs("disabled");
+        $("#basic_form input").removeAttr("disabled");
+        $("#basic_save").removeAttr("disabled");
+        $("#basic_remove").removeAttr("disabled");
     });
     $("#basic_save").click(function () {
         $("#basic_form").submit();
@@ -183,11 +183,11 @@
     });
 
     $("#pwd_edit").click(function () {
-        $("#old_pwd").removeAttrs("disabled");
-        $("#new_pwd").removeAttrs("disabled");
-        $("#new_pwd1").removeAttrs("disabled");
-        $("#pwd_save").removeAttrs("disabled");
-        $("#pwd_remove").removeAttrs("disabled");
+        $("#old_pwd").removeAttr("disabled");
+        $("#new_pwd").removeAttr("disabled");
+        $("#new_pwd1").removeAttr("disabled");
+        $("#pwd_save").removeAttr("disabled");
+        $("#pwd_remove").removeAttr("disabled");
     });
     
     $("#pwd_remove").click(function () {

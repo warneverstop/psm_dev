@@ -84,19 +84,19 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="">专业管理</a>
+                                <a class="J_menuItem" href="${ctx}/major/select">专业管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="">班级管理</a>
+                                <a class="J_menuItem" href="${ctx}/class/select">班级管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="">宿舍管理</a>
+                                <a class="J_menuItem" href="${ctx}/drom/select">宿舍管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="">课程管理</a>
+                                <a class="J_menuItem" href="${ctx}/course/select">课程管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="">教师管理</a>
+                                <a class="J_menuItem" href="${ctx}/teacher/select">教师管理</a>
                             </li>
                         </ul>
                     </li>
@@ -114,7 +114,7 @@
                             <a class="J_menuItem" href="class_list.html">班级信息管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="drom_info.html">宿舍信息管理</a>
+                            <a class="J_menuItem" href="${ctx}">宿舍信息管理</a>
                         </li>
                         <li>
                             <a class="J_menuItem" href="student_list.html">学生信息管理</a>
@@ -226,7 +226,7 @@
             </button>
             <nav class="page-tabs J_menuTabs">
                 <div class="page-tabs-content">
-                    <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+                    <a href="javascript:;" class="active J_menuTab" data-id="${pageContext.request.contextPath}/user/personal">首页</a>
                 </div>
             </nav>
             <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
@@ -248,7 +248,7 @@
             <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
         </div>
         <div class="row J_mainContent" id="content-main">
-            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${ctx}/user/personal" frameborder="0" data-id="${ctx}/user/personal" seamless></iframe>
+            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${pageContext.request.contextPath}/user/personal" frameborder="0" data-id="${pageContext.request.contextPath}/user/personal" seamless></iframe>
         </div>
         <div class="footer">
             <div class="pull-right">&copy; 2014-2015 junjie su

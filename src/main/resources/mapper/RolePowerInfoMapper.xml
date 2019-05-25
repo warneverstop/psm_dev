@@ -18,4 +18,8 @@
     WHERE
       rp.role_id = #{roleId}
   </select>
+
+  <delete id="deleteByRoleId" parameterType="integer">
+    DELETE from role_power_info where role_power_info.role_id = #{roleId}
+  </delete>
 </mapper>

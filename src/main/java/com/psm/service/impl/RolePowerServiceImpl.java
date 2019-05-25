@@ -26,4 +26,21 @@ public class RolePowerServiceImpl implements IRolePowerService {
     public List<RolePowerInfo> selectByRoleId(Integer roleId) {
         return rolePowerInfoMapper.selectByRoleId(roleId);
     }
+
+    @Override
+    public boolean updateRolePower(Integer[] powerIds, Integer roleId) {
+        RolePowerInfo rolePowerInfo = null;
+        try {
+            rolePowerInfoMapper.deleteByRoleId(roleId);
+            for (Integer powerId: powerIds) {
+                rolePowerInfo = new RolePowerInfo();
+                rolePowerInfo.setPowerId(powerId);
+                rolePowerInfo.setRoleId(roleId);
+                rolePowerInfoMapper.insert(rolePowerInfo);
+            }
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

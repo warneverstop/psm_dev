@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.MajorInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.MajorInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="major_id" jdbcType="INTEGER" property="majorId" />
+    <result column="major_name" jdbcType="VARCHAR" property="majorName" />
+    <result column="profile" jdbcType="VARCHAR" property="profile" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del" jdbcType="INTEGER" property="del" />
+  </resultMap>
+
+  <select id="selectAllInfo" resultMap="BaseResultMap">
+    select *
+    from major_info
+    where del = 1
+  </select>
+</mapper>

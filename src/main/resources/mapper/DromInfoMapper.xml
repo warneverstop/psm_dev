@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.DromInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.DromInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="drom_id" jdbcType="INTEGER" property="dromId" />
+    <result column="drom_name" jdbcType="VARCHAR" property="dromName" />
+    <result column="drom_address" jdbcType="VARCHAR" property="dromAddress" />
+    <result column="standrad" jdbcType="VARCHAR" property="standrad" />
+    <result column="already_lived" jdbcType="INTEGER" property="alreadyLived" />
+    <result column="profile" jdbcType="VARCHAR" property="profile" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del" jdbcType="INTEGER" property="del" />
+  </resultMap>
+
+  <select id="selectAllInfo" resultMap="BaseResultMap">
+    select * from drom_info where del = 1
+  </select>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.ClassInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.ClassInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="class_number" jdbcType="VARCHAR" property="classNumber" />
+    <result column="sum_people" jdbcType="INTEGER" property="sumPeople" />
+    <result column="major_id" jdbcType="INTEGER" property="majorId" />
+    <result column="college" jdbcType="VARCHAR" property="college" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="profile" jdbcType="VARCHAR" property="profile" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del" jdbcType="INTEGER" property="del" />
+  </resultMap>
+
+  <resultMap id="getAllMap" type="com.psm.dto.ClassInfo">
+    <id column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="class_number" jdbcType="VARCHAR" property="classNumber" />
+    <result column="sum_people" jdbcType="INTEGER" property="sumPeople" />
+    <result column="major_id" jdbcType="INTEGER" property="majorId" />
+    <result column="college" jdbcType="VARCHAR" property="college" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="profile" jdbcType="VARCHAR" property="profile" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del" jdbcType="INTEGER" property="del" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="major_name" jdbcType="VARCHAR" property="majorName" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+  </resultMap>
+
+
+  <select id="selectAllInfo" resultMap="getAllMap">
+    SELECT
+      c.*, t.teacher_name,
+      m.major_name,
+      s.stu_name
+    FROM
+      class_info c
+        LEFT JOIN teacher_info t ON c.teacher_id = t.teacher_id
+        LEFT JOIN major_info m ON c.major_id = m.major_id
+        LEFT JOIN student_info s ON c.student_id = s.stu_name
+    WHERE
+      c.del = 1
+  </select>
+</mapper>
