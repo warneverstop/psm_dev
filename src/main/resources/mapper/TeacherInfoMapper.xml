@@ -27,4 +27,13 @@
     from teacher_info
     where del = 1
   </select>
+
+  <select id="selectByTeacherNumber" resultType="com.psm.dto.TeacherInfo" parameterType="integer">
+    SELECT
+      *
+    FROM
+      teacher_info
+    WHERE
+      teacher_number = #{teacherNumber}
+  </select>
 </mapper>

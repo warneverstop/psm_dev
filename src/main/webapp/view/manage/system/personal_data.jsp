@@ -130,19 +130,19 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">旧密码：</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control" id="old_pwd" disabled >
+                                                    <input type="password" class="form-control" id="old_pwd" disabled >
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">新密码：</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control" id="new_pwd"  disabled>
+                                                    <input type="password" class="form-control" id="new_pwd"  disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">再次输入：</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control" id="new_pwd1" disabled>
+                                                    <input type="password" class="form-control" id="new_pwd1" disabled>
                                                 </div>
                                             </div>
                                         </form>
@@ -167,6 +167,7 @@
 <script src="${ctx}/js/bootstrap.min.js?v=3.3.6"></script>
 <!-- 自定义js -->
 <script src="${ctx}/js/content.js?v=1.0.0"></script>
+<script type="text/javascript" src="${ctx}/dist/layer-v3.1.1/layer/layer.js"></script>
 
 </body>
 <script>

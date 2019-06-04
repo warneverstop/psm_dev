@@ -16,4 +16,11 @@ public interface ITeacherService {
     int insertTeacher(TeacherInfo teacherInfo);
 
     int updateTeacher(TeacherInfo teacherInfo);
+
+    /**
+     * 根据教师编号查找教师信息
+     * @param teacherNumber
+     * @return
+     */
+    TeacherInfo selectByTeacherNumber(Integer teacherNumber);
 }

@@ -37,4 +37,9 @@ public class CourseServiceImpl implements ICourseService {
     public int update(CourseInfo courseInfo) {
         return courseInfoMapper.updateByPrimaryKey(courseInfo);
     }
+
+    @Override
+    public CourseInfo selectByName(String courseName) {
+        return courseInfoMapper.selectByName(courseName);
+    }
 }

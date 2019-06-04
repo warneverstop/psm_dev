@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ClassInfoMapper extends Mapper<ClassInfo> {
     List<ClassInfo> selectAllInfo();
+
+    ClassInfo selectByTeacherId(Integer teacherId);
 }

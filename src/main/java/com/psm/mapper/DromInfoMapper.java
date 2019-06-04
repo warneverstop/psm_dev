@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface DromInfoMapper extends Mapper<DromInfo> {
     List<DromInfo> selectAllInfo();
+
+    List<DromInfo> selectByClassId(Integer classId);
 }

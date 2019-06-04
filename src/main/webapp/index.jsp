@@ -10,7 +10,7 @@
 </head>
 <body>
 <script>
-    window.location.href = "${ctx}/system/login";
+    window.location.href = "${ctx}/parent/login";
 </script>
 </body>
 </html>

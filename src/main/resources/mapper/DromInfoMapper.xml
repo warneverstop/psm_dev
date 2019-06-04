@@ -18,4 +18,15 @@
   <select id="selectAllInfo" resultMap="BaseResultMap">
     select * from drom_info where del = 1
   </select>
+
+  <select id="selectByClassId" resultMap="BaseResultMap" parameterType="integer">
+    SELECT
+      d.*
+    FROM
+      drom_info d
+        LEFT JOIN class_drom c ON d.drom_id = c.drom_id
+    WHERE
+      d.del = 1
+      AND c.class_id = #{classId}
+  </select>
 </mapper>

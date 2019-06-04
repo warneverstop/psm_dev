@@ -1,6 +1,7 @@
 package com.psm.service;
 
 import com.psm.dto.UserInfo;
+import com.psm.dto.UserStatus;
 
 import java.util.List;
 
@@ -31,4 +32,8 @@ public interface IUserService {
     int deleteById(Integer userId);
 
     List<UserInfo> selectAll();
+
+    boolean setUserStatust(UserStatus userStatus);
+
+    boolean addPicture(String s, int userId);
 }

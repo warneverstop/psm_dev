@@ -37,4 +37,9 @@ public class ClassServiceImpl implements IClassService {
     public int update(ClassInfo classInfo) {
         return classInfoMapper.updateByPrimaryKey(classInfo);
     }
+
+    @Override
+    public ClassInfo selectByTeaherId(Integer teacherId) {
+        return classInfoMapper.selectByTeacherId(teacherId);
+    }
 }

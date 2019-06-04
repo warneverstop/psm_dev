@@ -45,6 +45,17 @@ public class CourseController {
         }
     }
 
+    @RequestMapping("/selectByName")
+    @ResponseBody
+    public Msg selectByName(String courseName){
+        try {
+            CourseInfo courseInfo = courseService.selectByName(courseName);
+            return Msg.success().add("courseInfo",courseInfo);
+        }catch (Exception e){
+            return Msg.fail();
+        }
+    }
+
     @RequestMapping("/save")
     @ResponseBody
     public Msg saveObject(CourseInfo courseInfo){

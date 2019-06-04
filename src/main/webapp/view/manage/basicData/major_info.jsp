@@ -134,10 +134,10 @@
                     <table id="table-id" class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <th style="">专业名称</th>
+                            <th style="width:80px">专业名称</th>
                             <th style="">专业简介</th>
-                            <th style="">备注</th>
-                            <th>操作</th>
+                            <th style="width:200px">备注</th>
+                            <th style="width:120px">操作</th>
                         </tr>
                         </thead>
                         <tbody>

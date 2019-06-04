@@ -55,6 +55,26 @@ public class UserInfo {
     List<PowerInfo> powerInfoList = new ArrayList<>();
     @Transient
     List<String> powerNames = new ArrayList<>();
+    @Transient
+    private Integer statusId;
+    @Transient
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
 
     public List<String> getPowerNames() {
         return powerNames;
@@ -266,5 +286,28 @@ public class UserInfo {
      */
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", genter='" + genter + '\'' +
+                ", address='" + address + '\'' +
+                ", birthday=" + birthday +
+                ", addTime=" + addTime +
+                ", addUser='" + addUser + '\'' +
+                ", state='" + state + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", password='" + password + '\'' +
+                ", roleId=" + roleId +
+                ", email='" + email + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", roleName='" + roleName + '\'' +
+                ", statusId=" + statusId +
+                ", id=" + id +
+                '}';
     }
 }

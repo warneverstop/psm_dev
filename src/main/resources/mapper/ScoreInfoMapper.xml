@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.ScoreInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.ScoreInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="score_id" jdbcType="INTEGER" property="scoreId" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="school_year" jdbcType="VARCHAR" property="schoolYear" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+
+  <resultMap id="getAllMap" type="com.psm.dto.ScoreInfo">
+    <id column="score_id" jdbcType="INTEGER" property="scoreId" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="school_year" jdbcType="VARCHAR" property="schoolYear" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="attribute" jdbcType="VARCHAR" property="attribute" />
+    <result column="credit" jdbcType="INTEGER" property="credit" />
+    <result column="stu_number" jdbcType="BIGINT" property="stuNumber" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+  </resultMap>
+
+  <select id="selectByClassId" resultMap="getAllMap" parameterType="integer">
+    SELECT
+      sco.*, stu.stu_name,
+      stu.stu_number,
+      c.course_name,
+      c.attribute,
+      c.credit
+    FROM
+      score_info sco
+        LEFT JOIN student_info stu ON sco.stu_id = stu.stu_id
+        LEFT JOIN course_info c ON sco.course_id = c.course_id
+    where stu.class_id = #{classId}
+  </select>
+
+  <select id="selectByCondition" resultMap="getAllMap">
+    SELECT
+      sco.*, stu.stu_name,
+      stu.stu_number,
+      c.course_name,
+      c.attribute,
+      c.credit
+    FROM
+      score_info sco
+        LEFT JOIN student_info stu ON sco.stu_id = stu.stu_id
+        LEFT JOIN course_info c ON sco.course_id = c.course_id
+    where stu.class_id = #{classId}
+    <if test="courseName!=null and courseName!=''">
+      and c.course_name = #{courseName}
+    </if>
+    <if test="attribute!=null and attribute!=''">
+      and c.attribute = #{attribute}
+    </if>
+    <if test="grade!=null">
+      <choose>
+        <when test="grade == 0">
+          and sco.grade &lt; 60
+        </when>
+        <when test="grade == 1">
+          and sco.grade &gt;= 60 and sco.grade &lt; 70
+        </when>
+        <when test="grade == 2">
+          and sco.grade &gt;= 70 and sco.grade &lt; 80
+        </when>
+        <when test="grade == 3">
+          and sco.grade &gt;= 80 and sco.grade &lt; 90
+        </when>
+        <when test="grade == 4">
+          and sco.grade &gt; 90
+        </when>
+      </choose>
+    </if>
+    <if test="schoolYear!=null and schoolYear!=''">
+      and sco.school_year = #{schoolYear}
+    </if>
+    <if test="stuNumber!=null">
+      and stu.stu_number = #{stuNumber}
+    </if>
+  </select>
+
+  <select id="selectByScoreId" resultType="com.psm.dto.ScoreInfo" parameterType="integer">
+    SELECT
+      sco.*, stu.stu_name,
+      stu.stu_number,
+      c.course_name,
+      c.attribute,
+      c.credit
+    FROM
+      score_info sco
+        LEFT JOIN student_info stu ON sco.stu_id = stu.stu_id
+        LEFT JOIN course_info c ON sco.course_id = c.course_id
+    where sco.score_id=#{scoreId}
+  </select>
+
+  <select id="selectByStudentId" resultMap="getAllMap" parameterType="integer">
+    SELECT
+      sco.*, stu.stu_name,
+      stu.stu_number,
+      c.course_name,
+      c.attribute,
+      c.credit
+    FROM
+      score_info sco
+        LEFT JOIN student_info stu ON sco.stu_id = stu.stu_id
+        LEFT JOIN course_info c ON sco.course_id = c.course_id
+    where stu.stu_id = #{stuId}
+  </select>
+</mapper>

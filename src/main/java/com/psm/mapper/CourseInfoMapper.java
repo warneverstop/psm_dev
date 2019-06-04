@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CourseInfoMapper extends Mapper<CourseInfo> {
     List<CourseInfo> selectAllInfo();
+
+    CourseInfo selectByName(String courseName);
 }

@@ -32,7 +32,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <span><img alt="image" class="img-circle" src="${ctx}/img/profile_small.jpg" /></span>
+                        <span><img alt="image" class="img-circle" src="${user.imgUrl}" width="64px" height="64px"/></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                <span class="block m-t-xs"><strong class="font-bold">${user.userName}</strong></span>
@@ -40,13 +40,9 @@
                                 </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
+                            <li><a class="J_menuItem" href="${ctx}/view/manage/system/uploadPicture.jsp">修改头像</a>
                             </li>
-                            <li><a class="J_menuItem" href="profile.html">个人资料</a>
-                            </li>
-                            <li><a class="J_menuItem" href="contacts.html">联系我们</a>
-                            </li>
-                            <li><a class="J_menuItem" href="mailbox.html">信箱</a>
+                            <li><a class="J_menuItem" href="${pageContext.request.contextPath}/user/personal">个人资料</a>
                             </li>
                             <li class="divider"></li>
                             <li><a href="login.html">安全退出</a>
@@ -111,28 +107,31 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="class_list.html">班级信息管理</a>
+                            <a class="J_menuItem" href="${ctx}/class/showClassDefent">班级信息维护</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="${ctx}">宿舍信息管理</a>
+                            <a class="J_menuItem" href="${ctx}/drom/showDromDefent">宿舍信息维护</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="student_list.html">学生信息管理</a>
+                            <a class="J_menuItem" href="${ctx}/student/select">学生信息管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="score_list.html">成绩信息管理</a>
+                            <a class="J_menuItem" href="${ctx}/score/select">成绩信息管理</a>
                         </li>
                         <li>
                             <a href="#">技能成绩管理 <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
-                                <li><a class="J_menuItem" href="skill_manage.html">技能管理</a>
+                                <li><a class="J_menuItem" href="${ctx}/skill/select">技能管理</a>
                                 </li>
-                                <li><a class="J_menuItem" href="skill_score.html">成绩管理</a>
+                                <li><a class="J_menuItem" href="${ctx}/skill/selectScore">成绩管理</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="">学生行为管理</a>
+                            <a class="J_menuItem" href="${ctx}/action/select">学生行为管理</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="${ctx}/exercise/select">班级活动管理</a>
                         </li>
                     </ul>
                 </li>
@@ -147,10 +146,10 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="">学生个人成绩分析</a>
+                            <a class="J_menuItem" href="">考试成绩统计分析</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="">班级成绩分析</a>
+                            <a class="J_menuItem" href="">技能成绩统计分析</a>
                         </li>
                     </ul>
                 </li>
@@ -165,22 +164,16 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="">有关电话</a>
+                            <a class="J_menuItem" href="${ctx}/phone/select">有关电话</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="">日常通知</a>
-                        </li>
-                        <li>
-                            <a href="#">教师寄语 <span class="fa arrow"></span></a>
+                            <a href="#">通知管理 <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
-                                <li><a class="J_menuItem" href="message.html">文章列表</a>
+                                <li><a class="J_menuItem" href="${ctx}/notice/selectList">通知列表</a>
                                 </li>
-                                <li><a class="J_menuItem" href="article-management.html">文章管理</a>
+                                <li><a class="J_menuItem" href="${ctx}/notice/select">通知管理</a>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="">规章制度</a>
                         </li>
                     </ul>
                 </li>
@@ -188,7 +181,7 @@
 
                 <c:if test="${fn:contains(user.powerNames, 'show_communication')}">
                     <li>
-                    <a class="J_menuItem" href="communicate.html">
+                    <a class="J_menuItem" href="${ctx}/message/select">
                         <i class="fa fa-commenting"></i>
                         <span class="nav-label">沟通留言</span>
                     </a>
@@ -251,7 +244,7 @@
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${pageContext.request.contextPath}/user/personal" frameborder="0" data-id="${pageContext.request.contextPath}/user/personal" seamless></iframe>
         </div>
         <div class="footer">
-            <div class="pull-right">&copy; 2014-2015 junjie su
+            <div class="pull-right">&copy; 2015-2019 junjie su
             </div>
         </div>
     </div>

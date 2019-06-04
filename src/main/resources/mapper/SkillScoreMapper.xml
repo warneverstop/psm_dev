@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.SkillScoreMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.SkillScore">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="skill_id" jdbcType="INTEGER" property="skillId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+
+  <resultMap id="getAllMap" type="com.psm.dto.SkillScore">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="skill_id" jdbcType="INTEGER" property="skillId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="stu_number" jdbcType="VARCHAR" property="stuNumber" />
+    <result column="skill_name" jdbcType="VARCHAR" property="skillName" />
+    <result column="profile" jdbcType="VARCHAR" property="profile" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+
+
+  <select id="selectScoreByClassId" resultMap="getAllMap" parameterType="integer">
+    SELECT
+      ss.*, s.stu_name,
+      s.stu_number,
+      si.skill_name,
+      si.`profile`
+    FROM
+      skill_score ss
+        LEFT JOIN student_info s ON ss.stu_id = s.stu_id
+        LEFT JOIN skill_info si ON si.skill_id = ss.skill_id
+    WHERE
+      s.class_id = #{classId}
+  </select>
+
+  <select id="selectScoreByCondition" resultMap="getAllMap">
+    SELECT
+      ss.*, s.stu_name,
+      s.stu_number,
+      si.skill_name,
+      si.`profile`
+    FROM
+      skill_score ss
+        LEFT JOIN student_info s ON ss.stu_id = s.stu_id
+        LEFT JOIN skill_info si ON si.skill_id = ss.skill_id
+    WHERE
+      s.class_id = #{classId}
+    <if test="stuNumber!=null">
+      and s.stu_number = #{stuNumber}
+    </if>
+    <if test="skillId!=null">
+      and ss.skill_id = #{skillId}
+    </if>
+  </select>
+
+  <select id="selectByStudentId" resultMap="getAllMap" parameterType="integer">
+    SELECT
+      ss.*, s.stu_name,
+      s.stu_number,
+      si.skill_name,
+      si.`profile`,
+      si.url
+    FROM
+      skill_score ss
+        LEFT JOIN student_info s ON ss.stu_id = s.stu_id
+        LEFT JOIN skill_info si ON si.skill_id = ss.skill_id
+    WHERE
+      s.stu_id = #{stuId}
+  </select>
+</mapper>

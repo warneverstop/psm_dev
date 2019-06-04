@@ -1,10 +1,8 @@
 package com.psm.controller;
 
-import com.psm.dto.ClassInfo;
-import com.psm.dto.MajorInfo;
-import com.psm.dto.Msg;
-import com.psm.dto.TeacherInfo;
+import com.psm.dto.*;
 import com.psm.service.IMajorService;
+import com.psm.service.IStudentService;
 import com.psm.service.ITeacherService;
 import com.psm.service.IClassService;
 import org.apache.log4j.Logger;
@@ -14,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -31,6 +31,9 @@ public class ClassController {
     private ITeacherService teacherService;
     @Autowired
     private IMajorService majorService;
+    @Autowired
+    private IStudentService studentService;
+
 
     @RequestMapping("/select")
     public String showPage(Model model){
@@ -91,4 +94,66 @@ public class ClassController {
             return Msg.fail();
         }
     }
+
+
+    /**
+     * 显示班级信息维护界面
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("/showClassDefent")
+    public String showClassDefent(Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        ClassInfo classInfo = (ClassInfo) session.getAttribute("classInfo");
+        List<StudentInfo> studentInfoList = studentService.selectByClassId(classInfo.getClassId());
+
+        model.addAttribute("studentList",studentInfoList);
+        model.addAttribute("classInfo",classInfo);
+        return "manage/studentInfo/class_info_defent";
+    }
+
+    /**
+     * 班级信息维护界面的保存更新
+     * @param classInfo
+     * @return
+     */
+    @RequestMapping("/update")
+    @ResponseBody
+    public Msg updateClassInfo(ClassInfo classInfo,HttpServletRequest request){
+        try {
+            HttpSession session = request.getSession();
+            ClassInfo classInfo2 = (ClassInfo) session.getAttribute("classInfo");
+            classInfo2.setSumPeople(classInfo.getSumPeople());
+            classInfo2.setStudentId(classInfo.getStudentId());
+
+            ClassInfo classInfo1 = classService.selectById(classInfo.getClassId());
+            classInfo1.setSumPeople(classInfo.getSumPeople());
+            classInfo1.setStudentId(classInfo.getStudentId());
+            classService.update(classInfo1);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail();
+        }
+    }
+
+    @RequestMapping("/updateProfile")
+    @ResponseBody
+    public Msg updateClassProfile(Integer classId,String profile,HttpServletRequest request){
+        try {
+            HttpSession session = request.getSession();
+            ClassInfo classInfo = (ClassInfo) session.getAttribute("classInfo");
+            classInfo.setProfile(profile);
+
+
+            ClassInfo classInfo1 = classService.selectById(classId);
+            classInfo1.setProfile(profile);
+            classService.update(classInfo1);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail();
+        }
+    }
+
+
 }

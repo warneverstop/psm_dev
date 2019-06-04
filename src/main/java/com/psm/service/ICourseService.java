@@ -16,4 +16,6 @@ public interface ICourseService {
     int insert(CourseInfo courseInfo);
 
     int update(CourseInfo courseInfo);
+
+    CourseInfo selectByName(String courseName);
 }

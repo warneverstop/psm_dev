@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.ActionInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.ActionInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="action_id" jdbcType="INTEGER" property="actionId" />
+    <result column="action_title" jdbcType="VARCHAR" property="actionTitle" />
+    <result column="action_content" jdbcType="VARCHAR" property="actionContent" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+  </resultMap>
+
+  <resultMap id="getAllMap" type="com.psm.dto.ActionInfo">
+    <id column="action_id" jdbcType="INTEGER" property="actionId" />
+    <result column="action_title" jdbcType="VARCHAR" property="actionTitle" />
+    <result column="action_content" jdbcType="VARCHAR" property="actionContent" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="stu_number" jdbcType="BIGINT" property="stuNumber" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+  </resultMap>
+
+  <select id="selectAllInfo" resultMap="getAllMap">
+    SELECT
+      a.*, s.stu_name,
+      s.stu_number
+    FROM
+      action_info a
+        LEFT JOIN student_info s ON a.stu_id = s.stu_id
+  </select>
+
+  <select id="selectAllById" resultType="com.psm.dto.ActionInfo">
+    SELECT
+      a.*, s.stu_name,
+      s.stu_number
+    FROM
+      action_info a
+        LEFT JOIN student_info s ON a.stu_id = s.stu_id
+    where a.action_id = #{actionId}
+  </select>
+
+  <select id="selectByStudentId" resultMap="getAllMap" parameterType="integer">
+    SELECT
+      a.*, s.stu_name,
+      s.stu_number
+    FROM
+      action_info a
+        LEFT JOIN student_info s ON a.stu_id = s.stu_id
+    where a.stu_id = #{stuId}
+  </select>
+
+  <select id="selectByClassId" resultMap="getAllMap" parameterType="integer">
+    SELECT
+      a.*, s.stu_name,
+      s.stu_number
+    FROM
+      action_info a
+        LEFT JOIN student_info s ON a.stu_id = s.stu_id
+    where s.class_id = #{classId}
+  </select>
+
+  <select id="selectByStudentIdForParent" resultMap="getAllMap" parameterType="integer">
+    SELECT
+      a.*, s.stu_name,
+      s.stu_number
+    FROM
+      action_info a
+        LEFT JOIN student_info s ON a.stu_id = s.stu_id
+    where a.stu_id = #{stuId}
+    ORDER BY a.action_id DESC
+     LIMIT 0,6
+  </select>
+</mapper>

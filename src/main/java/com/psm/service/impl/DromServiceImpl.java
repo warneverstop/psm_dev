@@ -1,6 +1,8 @@
 package com.psm.service.impl;
 
+import com.psm.dto.ClassDrom;
 import com.psm.dto.DromInfo;
+import com.psm.mapper.ClassDromMapper;
 import com.psm.mapper.DromInfoMapper;
 import com.psm.service.IDromService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import java.util.List;
 public class DromServiceImpl implements IDromService {
     @Autowired
     private DromInfoMapper dromInfoMapper;
+    @Autowired
+    private ClassDromMapper classDromMapper;
 
     @Override
     public List<DromInfo> selectAll() {
@@ -35,5 +39,20 @@ public class DromServiceImpl implements IDromService {
     @Override
     public int insertDrom(DromInfo dromInfo) {
         return dromInfoMapper.insert(dromInfo);
+    }
+
+    @Override
+    public List<DromInfo> selectByClassId(Integer classId) {
+        return dromInfoMapper.selectByClassId(classId);
+    }
+
+    @Override
+    public void delectByDromIdAndClassId(Integer dromId, Integer classId) {
+        classDromMapper.deleteByDromIdAndClassId(dromId,classId);
+    }
+
+    @Override
+    public int insertDromForclass(ClassDrom classDrom) {
+        return classDromMapper.insert(classDrom);
     }
 }

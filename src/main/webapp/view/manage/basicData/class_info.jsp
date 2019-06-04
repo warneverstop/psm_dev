@@ -59,7 +59,9 @@
                         <label class="col-sm-3 control-label">专业：</label>
                         <div class="col-sm-9">
                             <select name="majorId" class="form-control" id="majorId_edit_input">
+                                <option style='display: none'></option>
                                 <c:forEach items="${majorList}" var="major">
+
                                     <option value="${major.majorId}">${major.majorName}</option>
                                 </c:forEach>
                             </select>
@@ -70,6 +72,7 @@
                         <label class="col-sm-3 control-label">班主任：</label>
                         <div class="col-sm-9">
                             <select name="teacherId" class="form-control" id="teacherId_edit_input">
+                                <option style='display: none'></option>
                                 <c:forEach items="${teacherList}" var="teacher">
                                     <option value="${teacher.teacherId}">${teacher.teacherName}</option>
                                 </c:forEach>
@@ -81,6 +84,7 @@
                         <label class="col-sm-3 control-label">班长：</label>
                         <div class="col-sm-9">
                             <select name="studentId" class="form-control" id="studentId_edit_input">
+                                <option style='display: none'></option>
                                 <c:forEach items="${studentList}" var="student">
                                     <option value="${student.studentId}">${student.studentName}</option>
                                 </c:forEach>

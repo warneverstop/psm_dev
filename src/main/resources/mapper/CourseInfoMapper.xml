@@ -18,4 +18,10 @@
     from course_info
     where del = 1
   </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select *
+    from course_info
+    where del = 1 and course_name = #{courseName}
+  </select>
 </mapper>

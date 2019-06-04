@@ -175,6 +175,45 @@
     </div>
 </div>
 
+<!-- 绑定身份模态框的模态框 -->
+<div class="modal fade" id="setUserStatusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabe3">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabe3">绑定身份</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <input type="hidden" name="id" id="id_set_input">
+                        <input type="hidden" name="userId" id="userId_set_input">
+                        <label class="col-sm-3 control-label">身份：</label>
+                        <div class="col-sm-9">
+                            <select name="status" class="form-control">
+                                <option value="教师">教师</option>
+                                <option value="学生">班委</option>
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">编号/学号：</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="statusId" class="form-control">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="status_save_btn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -203,6 +242,7 @@
                             <th style="">添加人</th>
                             <th>状态</th>
                             <th style="">角色</th>
+                            <th style="">对应人</th>
                             <th style="">备注</th>
                             <th>操作</th>
                         </tr>
@@ -220,9 +260,16 @@
                                     <c:if test="${userInfo.state == 1}">正常</c:if>
                                 </td>
                                 <td>${userInfo.roleName}</td>
+                                <td>${userInfo.statusId}</td>
                                 <td>${userInfo.remarks}</td>
                                 <td>
                                     <c:if test="${userInfo.userId != 1}">
+                                        <c:if test="${userInfo.id == null}">
+                                        <button type="button" class="btn btn-primary btn-xs" onclick="setUserStatus(0,${userInfo.userId})">绑定身份</button>
+                                        </c:if>
+                                        <c:if test="${userInfo.id != null}">
+                                            <button type="button" class="btn btn-primary btn-xs" onclick="setUserStatus(${userInfo.id},${userInfo.userId})">绑定身份</button>
+                                        </c:if>
                                         <button type="button" class="btn btn-warning btn-xs" onclick="editUser(${userInfo.userId})">修改</button>
                                         <button type="button" class="btn btn-danger btn-xs" onclick="deleteUser(${userInfo.userId})">删除</button>
                                     </c:if>
@@ -277,8 +324,9 @@
             success:function (data) {
                 if(data.code == 100){
                     $("#userAddModal").modal('hide');
-                    layer.msg(data.msg);
-                    window.location.reload();
+                    layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                        window.location.reload();
+                    });
                 }else{
                     layer.msg(data.msg)
                 }
@@ -328,8 +376,9 @@
             success:function (data) {
                 if(data.code == 100){
                     $("#userEditModal").modal('hide');
-                    layer.msg(data.msg);
-                    window.location.reload();
+                    layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                        window.location.reload();
+                    });
                 }else{
                     layer.msg(data.msg)
                 }
@@ -346,8 +395,9 @@
                 async:false,
                 success:function (data) {
                     if(data.code == 100){
-                        layer.msg(data.msg);
-                        window.location.reload();
+                        layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                            window.location.reload();
+                        });
                     }else{
                         layer.msg(data.msg)
                     }
@@ -355,8 +405,36 @@
             });
             layer.close(index);//关闭弹窗方法
         });
-
     }
+
+    function setUserStatus(id,userId) {
+        reset_form("#setUserStatusModal form");
+        $("#id_set_input").val(id);
+        $("#userId_set_input").val(userId);
+        $("#setUserStatusModal").modal({
+            backdrop:"static"
+        });
+    }
+
+    $("#status_save_btn").click(function () {
+        var userStatus = $("#setUserStatusModal form").serialize();
+        $.ajax({
+            url:"${ctx}/user/setStatus",
+            type:"POST",
+            data:userStatus,
+            success:function (data) {
+                if(data.code == 100){
+                    $("#setUserStatusModal").modal('hide');
+                    layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                        window.location.reload();
+                    });
+                }else{
+                    layer.msg(data.msg)
+                }
+            }
+        })
+    });
+
 </script>
 
 

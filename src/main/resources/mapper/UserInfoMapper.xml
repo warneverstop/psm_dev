@@ -36,16 +36,26 @@
     <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="status_id" jdbcType="INTEGER" property="statusId" />
+    <result column="id" jdbcType="INTEGER" property="id" />
   </resultMap>
 
   <select id="selectForLogin" parameterType="com.psm.dto.UserInfo" resultMap="getAllMap">
-    SELECT u.*,r.role_name
-    from user_info u LEFT JOIN role_info r on u.role_id = r.role_id
+    SELECT u.*,r.role_name,s.status_id
+    from user_info u
+    LEFT JOIN role_info r on u.role_id = r.role_id
+    LEFT JOIN user_status s ON u.user_id = s.user_id
     where u.user_name = #{userName} and u.`password` = #{password} and u.state = 1
   </select>
 
   <select id="selectAllInfo" resultMap="getAllMap">
-    SELECT u.*,r.role_name
-    from user_info u LEFT JOIN role_info r on u.role_id = r.role_id
+    SELECT
+      u.*, r.role_name,
+      s.status_id,
+      s.id
+    FROM
+      user_info u
+        LEFT JOIN role_info r ON u.role_id = r.role_id
+        LEFT JOIN user_status s ON u.user_id = s.user_id
   </select>
 </mapper>

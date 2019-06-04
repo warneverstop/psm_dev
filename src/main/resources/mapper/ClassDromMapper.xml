@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.ClassDromMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.ClassDrom">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="drom_id" jdbcType="INTEGER" property="dromId" />
+  </resultMap>
+
+  <delete id="deleteByDromIdAndClassId">
+    DELETE
+    FROM
+      class_drom
+    WHERE
+      drom_id = #{dromId}
+      AND class_id = #{classId}
+  </delete>
+</mapper>

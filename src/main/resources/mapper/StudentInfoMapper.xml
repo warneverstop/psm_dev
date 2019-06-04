@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.StudentInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.StudentInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="stu_number" jdbcType="BIGINT" property="stuNumber" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="genter" jdbcType="VARCHAR" property="genter" />
+    <result column="background" jdbcType="VARCHAR" property="background" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="now_address" jdbcType="VARCHAR" property="nowAddress" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="evaluate" jdbcType="VARCHAR" property="evaluate" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="major_id" jdbcType="INTEGER" property="majorId" />
+    <result column="drom_id" jdbcType="INTEGER" property="dromId" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+
+  <resultMap id="getAllMap" type="com.psm.dto.StudentInfo">
+    <id column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="stu_number" jdbcType="BIGINT" property="stuNumber" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="genter" jdbcType="VARCHAR" property="genter" />
+    <result column="background" jdbcType="VARCHAR" property="background" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="now_address" jdbcType="VARCHAR" property="nowAddress" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="evaluate" jdbcType="VARCHAR" property="evaluate" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="major_id" jdbcType="INTEGER" property="majorId" />
+    <result column="drom_id" jdbcType="INTEGER" property="dromId" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="class_number" jdbcType="VARCHAR" property="classNumber" />
+    <result column="major_name" jdbcType="VARCHAR" property="majorName" />
+    <result column="drom_name" jdbcType="VARCHAR" property="dromName" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+  </resultMap>
+
+  <select id="selectAllInfo" resultMap="getAllMap">
+    SELECT s.*,c.class_number,m.major_name,d.drom_name,t.teacher_name
+    from student_info s
+           LEFT JOIN class_info c on s.class_id = c.class_id
+           LEFT JOIN major_info m on s.major_id = m.major_id
+           LEFT JOIN drom_info d on s.drom_id = d.drom_id
+           LEFT JOIN teacher_info t on s.teacher_id = t.teacher_id
+  </select>
+
+  <select id="selectByClassId" resultMap="getAllMap" parameterType="integer">
+    SELECT s.*,c.class_number,m.major_name,d.drom_name,t.teacher_name
+    from student_info s
+     LEFT JOIN class_info c on s.class_id = c.class_id
+     LEFT JOIN major_info m on s.major_id = m.major_id
+     LEFT JOIN drom_info d on s.drom_id = d.drom_id
+     LEFT JOIN teacher_info t on s.teacher_id = t.teacher_id
+    where s.class_id = #{classId}
+  </select>
+
+  <select id="selectAllByStuId" parameterType="integer" resultMap="getAllMap">
+    SELECT s.*,c.class_number,m.major_name,d.drom_name,t.teacher_name
+    from student_info s
+           LEFT JOIN class_info c on s.class_id = c.class_id
+           LEFT JOIN major_info m on s.major_id = m.major_id
+           LEFT JOIN drom_info d on s.drom_id = d.drom_id
+           LEFT JOIN teacher_info t on s.teacher_id = t.teacher_id
+    where s.stu_id = #{studentId}
+  </select>
+
+  <select id="selectByStuNumber" resultType="com.psm.dto.StudentInfo" parameterType="java.lang.Long">
+    SELECT s.*,c.class_number,m.major_name,d.drom_name,t.teacher_name
+    from student_info s
+           LEFT JOIN class_info c on s.class_id = c.class_id
+           LEFT JOIN major_info m on s.major_id = m.major_id
+           LEFT JOIN drom_info d on s.drom_id = d.drom_id
+           LEFT JOIN teacher_info t on s.teacher_id = t.teacher_id
+    where s.stu_number = #{stuNumber}
+  </select>
+
+    <select id="selectByDromId" parameterType="integer" resultMap="getAllMap">
+        SELECT s.*,c.class_number,m.major_name,d.drom_name,t.teacher_name
+        from student_info s
+                 LEFT JOIN class_info c on s.class_id = c.class_id
+                 LEFT JOIN major_info m on s.major_id = m.major_id
+                 LEFT JOIN drom_info d on s.drom_id = d.drom_id
+                 LEFT JOIN teacher_info t on s.teacher_id = t.teacher_id
+        where s.drom_id = #{dromId}
+    </select>
+
+    <select id="selectInPostion" resultMap="getAllMap">
+        SELECT s.*,c.class_number,m.major_name,d.drom_name,t.teacher_name
+        from student_info s
+                 LEFT JOIN class_info c on s.class_id = c.class_id
+                 LEFT JOIN major_info m on s.major_id = m.major_id
+                 LEFT JOIN drom_info d on s.drom_id = d.drom_id
+                 LEFT JOIN teacher_info t on s.teacher_id = t.teacher_id
+        where s.position like '_%'
+    </select>
+</mapper>

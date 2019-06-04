@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psm.mapper.ExerciseInfoMapper">
+  <resultMap id="BaseResultMap" type="com.psm.dto.ExerciseInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="exercise_id" jdbcType="INTEGER" property="exerciseId" />
+    <result column="happen_time" jdbcType="TIMESTAMP" property="happenTime" />
+    <result column="theme" jdbcType="VARCHAR" property="theme" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="first_img_url" jdbcType="VARCHAR" property="firstImgUrl" />
+    <result column="others_img_url" jdbcType="VARCHAR" property="othersImgUrl" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+  </resultMap>
+
+
+  <select id="selectByCalssId" resultMap="BaseResultMap" parameterType="integer">
+    SELECT *
+    from exercise_info
+    where class_id = #{classId}
+    ORDER BY exercise_id DESC
+  </select>
+
+  <select id="selectByClassIdForParent" resultMap="BaseResultMap" parameterType="integer">
+    SELECT *
+    from exercise_info
+    where class_id = #{classId}
+    ORDER BY exercise_id DESC
+             LIMIT 0,4
+  </select>
+</mapper>

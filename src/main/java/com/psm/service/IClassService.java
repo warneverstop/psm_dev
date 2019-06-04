@@ -17,4 +17,10 @@ public interface IClassService {
 
     int update(ClassInfo classInfo);
 
+    /**
+     * 根据教师id查找班级信息
+     * @param teacherId
+     * @return
+     */
+    ClassInfo selectByTeaherId(Integer teacherId);
 }

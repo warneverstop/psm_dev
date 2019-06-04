@@ -1,5 +1,6 @@
 package com.psm.service;
 
+import com.psm.dto.ClassDrom;
 import com.psm.dto.DromInfo;
 
 import java.util.List;
@@ -17,4 +18,14 @@ public interface IDromService {
 
     int insertDrom(DromInfo dromInfo);
 
+    /**
+     * 根据班级id查找本班级的所有宿舍
+     * @param classId
+     * @return
+     */
+    List<DromInfo> selectByClassId(Integer classId);
+
+    void delectByDromIdAndClassId(Integer dromId, Integer classId);
+
+    int insertDromForclass(ClassDrom classDrom);
 }
