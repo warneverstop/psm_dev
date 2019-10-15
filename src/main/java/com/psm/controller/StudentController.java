@@ -7,11 +7,21 @@ import com.psm.dto.*;
 import com.psm.service.*;
 import com.psm.utils.ExcelUtil;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,9 +31,12 @@ import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -381,4 +394,152 @@ public class StudentController implements ServletConfigAware {
         this.servletConfig = servletConfig;
     }
 
+    /**
+     * 导入excel数据
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/import")
+    public String importStudentExecl(HttpServletRequest request,HttpServletResponse response,Model model){
+        List<StudentInfo> studentInfoList = null;
+        System.out.println("hello gril");
+        response.setContentType("text/html;charset=UTF-8");
+        try {
+            FileItemFactory factory = new DiskFileItemFactory();
+            // 文件上传核心工具类
+            ServletFileUpload upload = new ServletFileUpload(factory);
+
+            upload.setFileSizeMax(10 * 1024 * 1024); // 单个文件大小限制
+            upload.setSizeMax(50 * 1024 * 1024); // 总文件大小限制
+            upload.setHeaderEncoding("UTF-8"); // 对中文文件编码处理
+
+            if (ServletFileUpload.isMultipartContent(request)) {
+                List<FileItem> list = upload.parseRequest(request);
+                // 遍历
+                for (FileItem item : list) {
+                    if (!item.isFormField()) {
+                        String fileName = item.getName();
+                        studentInfoList = readExcel(item.getInputStream(), fileName);
+                    }
+                }
+            }
+            model.addAttribute("studentList",studentInfoList);
+            return "manage/studentInfo/add_student";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
+
+    public static List<StudentInfo> readExcel(InputStream is, String fileName) {
+        List<StudentInfo> studentInfoList = new ArrayList<>();
+        StudentInfo studentInfo = null;
+        String type = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+        System.out.println("后缀名：" + type);
+        try {
+            Workbook hssfWorkbook = "xls".equals(type) ? new HSSFWorkbook(is) : new XSSFWorkbook(is);
+            NumberFormat nf = NumberFormat.getInstance();
+            //循环sheet
+            for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
+                Sheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
+                if (hssfSheet == null) {
+                    continue;
+                }
+                //循环row,第一行是标题，所以从第二行开始
+                for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
+                    Row hssfRow = hssfSheet.getRow(rowNum);
+                    studentInfo = new StudentInfo();
+                    if (hssfRow != null) {
+                        //循环列
+                        for (int cellNum = 0; cellNum < hssfRow.getLastCellNum(); cellNum++) {
+                            Cell cell = hssfRow.getCell(cellNum);
+                            if (cellNum == 0) {
+                                //double stuNumber = cell.getNumericCellValue();
+                                Long stuNumber = new Long(new Double(cell.getNumericCellValue()).longValue());
+                                studentInfo.setStuNumber(stuNumber);
+                            } else if (cellNum == 1) {
+                                String stuName = cell.getStringCellValue();
+                                studentInfo.setStuName(stuName);
+                            }else if (cellNum == 2) {
+                                String genter = cell.getStringCellValue();
+                                studentInfo.setGenter(genter);
+                            } else if (cellNum == 3) {
+                                String backgroud = cell.getStringCellValue();
+                                studentInfo.setBackground(backgroud);
+                            }else if (cellNum == 4) {
+                                String phone = nf.format(cell.getNumericCellValue());
+                                //String phone = String.valueOf(cell.getNumericCellValue());
+                                if (phone.indexOf(",") >= 0) {
+                                    phone = phone.replace(",", "");
+                                }
+                                studentInfo.setPhone(phone);
+                            }else if (cellNum == 5) {
+                                String state = cell.getStringCellValue();
+                                studentInfo.setState(state);
+                            }else if (cellNum == 6) {
+                                String remarks = cell.getStringCellValue();
+                                studentInfo.setRemarks(remarks);
+                            }
+                        }
+                    }
+                    studentInfoList.add(studentInfo);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return studentInfoList;
+    }
+
+    /**
+     * 批量添加学生信息列表
+     * @param studentInfos
+     * @param request
+     * @return
+     */
+    @RequestMapping("/addStudentList")
+    @ResponseBody
+    public Msg addScoreList(@RequestBody StudentInfo[] studentInfos,HttpServletRequest request){
+        ClassInfo classInfo = (ClassInfo) request.getSession().getAttribute("classInfo");
+        try {
+            for (StudentInfo stu:studentInfos) {
+                //从session中获取班级信息直接为学生赋值
+                stu.setClassId(classInfo.getClassId());
+                stu.setMajorId(classInfo.getMajorId());
+                stu.setTeacherId(classInfo.getTeacherId());
+                studentService.insert(stu);
+
+                //添加学生的同时，就添加该学生的家长初始账户
+                logger.info("学生id"+stu.getStuId());
+                ParentInfo parentInfo = new ParentInfo();
+                parentInfo.setParentName("家长1");
+                parentInfo.setUserName(stu.getStuNumber()+"1");
+                parentInfo.setPassword("1234");
+                parentInfo.setStuId(stu.getStuId());
+
+                ParentInfo parentInfo2 = new ParentInfo();
+                parentInfo2.setParentName("家长2");
+                parentInfo2.setUserName(stu.getStuNumber()+"2");
+                parentInfo2.setPassword("1234");
+                parentInfo2.setStuId(stu.getStuId());
+
+                parentService.insert(parentInfo);
+                parentService.insert(parentInfo2);
+            }
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail();
+        }
+    }
 }

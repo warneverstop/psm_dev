@@ -146,10 +146,7 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="">考试成绩统计分析</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="">技能成绩统计分析</a>
+                            <a class="J_menuItem" href="${ctx}/score/scoreAnalyse?schoolYear=大一上">考试成绩统计分析</a>
                         </li>
                     </ul>
                 </li>

@@ -1,7 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="war" name="psm_dev:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/psm_dev_war</output-path>
-    <root id="archive" name="psm_dev_war.war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>psm_dev</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="psm.war">
       <element id="artifact" artifact-name="psm_dev:war exploded" />
     </root>
   </artifact>

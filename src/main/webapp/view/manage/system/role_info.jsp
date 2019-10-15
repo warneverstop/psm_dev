@@ -215,8 +215,9 @@
             success:function (data) {
                 if(data.code == 100){
                     $("#roleAddModal").modal('hide');
-                    layer.msg(data.msg);
-                    window.location.reload();
+                    layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                        window.location.reload();
+                    });
                 }else{
                     layer.msg(data.msg)
                 }
@@ -261,8 +262,9 @@
             success:function (data) {
                 if(data.code == 100){
                     $("#roleEditModal").modal('hide');
-                    layer.msg(data.msg);
-                    window.location.reload();
+                    layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                        window.location.reload();
+                    });
                 }else{
                     layer.msg(data.msg)
                 }
@@ -279,8 +281,9 @@
                 async:false,
                 success:function (data) {
                     if(data.code == 100){
-                        layer.msg(data.msg);
-                        window.location.reload();
+                        layer.msg(data.msg, {icon: 1,time: 1000}, function(){
+                            window.location.reload();
+                        });
                     }else{
                         layer.msg(data.msg)
                     }

@@ -80,7 +80,7 @@
                             <th style="width: 100px;">标题</th>
                             <th style="">内容</th>
                             <th style="width:120px;">发送时间</th>
-                            <th style="width:40px;">状态</th>
+                            <th style="width:60px;">状态</th>
                             <th class="text-center" style="width:60px;">操作</th>
                         </tr>
                         </thead>

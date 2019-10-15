@@ -25,7 +25,7 @@ public class ClassServiceImpl implements IClassService {
 
     @Override
     public ClassInfo selectById(Integer classId) {
-        return classInfoMapper.selectByPrimaryKey(classId);
+        return classInfoMapper.selectAllByPrimaryKey(classId);
     }
 
     @Override

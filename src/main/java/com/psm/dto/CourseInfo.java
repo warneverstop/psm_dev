@@ -38,6 +38,27 @@ public class CourseInfo {
      */
     private Integer del;
 
+    @Transient
+    private Integer passingNumber;
+    @Transient
+    private Integer noPassingNumber;
+
+    public Integer getPassingNumber() {
+        return passingNumber;
+    }
+
+    public void setPassingNumber(Integer passingNumber) {
+        this.passingNumber = passingNumber;
+    }
+
+    public Integer getNoPassingNumber() {
+        return noPassingNumber;
+    }
+
+    public void setNoPassingNumber(Integer noPassingNumber) {
+        this.noPassingNumber = noPassingNumber;
+    }
+
     /**
      * 获取课程id
      *

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -241,5 +242,16 @@ public class ScoreController {
         }catch (Exception e){
             return Msg.fail();
         }
+    }
+
+    @RequestMapping("/scoreAnalyse")
+    public String scoreAnalyse(Model model,HttpServletRequest request,String schoolYear){
+        ClassInfo classInfo = (ClassInfo) request.getSession().getAttribute("classInfo");
+        List<ScoreInfo> scoreList = scoreService.selectPeopleAnalyse(classInfo.getClassId(),schoolYear);
+        model.addAttribute("scoreList",scoreList);
+        model.addAttribute("schoolYear",schoolYear);
+        model.addAttribute("size",scoreList.size());
+        model.addAttribute("classNumber",classInfo.getClassNumber());
+        return  "manage/scoreAnalyse/score_analyse";
     }
 }

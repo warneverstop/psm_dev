@@ -473,4 +473,32 @@ public class StudentInfo {
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
+
+    @Override
+    public String toString() {
+        return "StudentInfo{" +
+                "stuId=" + stuId +
+                ", stuNumber=" + stuNumber +
+                ", stuName='" + stuName + '\'' +
+                ", genter='" + genter + '\'' +
+                ", background='" + background + '\'' +
+                ", birthday=" + birthday +
+                ", phone='" + phone + '\'' +
+                ", position='" + position + '\'' +
+                ", nowAddress='" + nowAddress + '\'' +
+                ", address='" + address + '\'' +
+                ", evaluate='" + evaluate + '\'' +
+                ", state='" + state + '\'' +
+                ", classId=" + classId +
+                ", majorId=" + majorId +
+                ", dromId=" + dromId +
+                ", teacherId=" + teacherId +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", classNumber='" + classNumber + '\'' +
+                ", majorName='" + majorName + '\'' +
+                ", dromName='" + dromName + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                '}';
+    }
 }

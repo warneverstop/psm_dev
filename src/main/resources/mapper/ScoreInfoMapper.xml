@@ -25,6 +25,8 @@
     <result column="credit" jdbcType="INTEGER" property="credit" />
     <result column="stu_number" jdbcType="BIGINT" property="stuNumber" />
     <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="passing_number" jdbcType="INTEGER" property="passingNumber" />
+    <result column="no_passing_number" jdbcType="INTEGER" property="noPassingNumber" />
   </resultMap>
 
   <select id="selectByClassId" resultMap="getAllMap" parameterType="integer">
@@ -65,7 +67,7 @@
           and sco.grade &lt; 60
         </when>
         <when test="grade == 1">
-          and sco.grade &gt;= 60 and sco.grade &lt; 70
+          and sco.grade &gt;=  60 and sco.grade &lt; 70
         </when>
         <when test="grade == 2">
           and sco.grade &gt;= 70 and sco.grade &lt; 80
@@ -112,5 +114,37 @@
         LEFT JOIN student_info stu ON sco.stu_id = stu.stu_id
         LEFT JOIN course_info c ON sco.course_id = c.course_id
     where stu.stu_id = #{stuId}
+  </select>
+
+
+  <resultMap id="passingMap" type="com.psm.dto.ScoreInfo">
+    <result column="no_passing_number" jdbcType="INTEGER" property="noPassingNumber" />
+    <result column="passing_number" jdbcType="INTEGER" property="passingNumber" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+
+  </resultMap>
+  <select id="selectPeopleAnalyse" resultMap="getAllMap">
+    SELECT
+    c.attribute,
+    c.credit,
+    s.school_year,
+    c.course_name,
+    sum(
+    CASE
+    WHEN s.grade >= 60 THEN 1 else 0
+    END
+    ) AS passing_number,
+    sum(
+    CASE
+    WHEN s.grade &lt; 60 THEN 1 else 0
+    END
+    ) AS no_passing_number
+    FROM
+    course_info c
+    LEFT JOIN score_info s ON c.course_id = s.course_id
+    LEFT JOIN student_info stu on stu.stu_id = s.stu_id
+    WHERE stu.class_id = #{classId} and s.school_year=#{schoolYear}
+    GROUP BY
+    s.course_id
   </select>
 </mapper>

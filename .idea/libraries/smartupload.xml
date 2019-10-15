@@ -2,6 +2,7 @@
   <library name="smartupload">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/smartupload.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/dom4j-1.6.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

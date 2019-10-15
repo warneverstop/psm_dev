@@ -350,7 +350,7 @@
                         <td>${classCommittee.stuNumber}</td>
                         <td>${classCommittee.stuName}</td>
                         <td>${classCommittee.phone}</td>
-                        <td>${classCommittee.address}</td>
+                        <td>${classCommittee.position}</td>
                     </tr>
                 </c:forEach>
             </table>

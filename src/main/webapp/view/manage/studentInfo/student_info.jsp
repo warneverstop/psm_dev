@@ -16,7 +16,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>宿舍信息管理</title>
+    <title>学生信息管理</title>
 
     <link rel="shortcut icon" href="${ctx}/favicon.ico">
     <link href="${ctx}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
@@ -31,6 +31,31 @@
 </head>
 
 <body class="gray-bg">
+
+<!-- 家长信息的模态框 -->
+<div class="modal fade" id="studentListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabe3">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabe3">导入Excel</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="${ctx}/student/import"  enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <div class="col-sm-9">
+                            <input type="file" name="upload_file" id="file_input">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="stu_save_btn">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 家长信息的模态框 -->
 <div class="modal fade" id="parentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabe2">
@@ -61,8 +86,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!-- 添加的模态框 -->
 <div class="modal fade" id="objectAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -134,13 +157,13 @@
     </div>
 </div>
 
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <button type="button" class="btn btn-primary" id="addObject">添加</button>
+                    <button type="button" class="btn btn-primary" id="addObject">单条添加</button>
+                    <button type="button" class="btn btn-primary" id="impot_btn">批量导入</button>
                     <button type="button" class="btn btn-primary" id="export_btn">导出明细表</button>
                     <div class="ibox-tools">
                         <a class="collapse-link">
@@ -337,6 +360,23 @@
             }
         });
     }
+    //导入按钮
+    $("#impot_btn").click(function () {
+        reset_form("#studentListModal form");
+        $("#studentListModal").modal({
+            backdrop:"static"
+        });
+    });
+
+    $("#stu_save_btn").click(function () {
+        if($("#file_input").val() == null || $("#file_input").val() == ""){
+            layer.msg("请选择文件!");
+        }else{
+            $("#studentListModal form").submit();
+        }
+    });
+
+
 </script>
 
 

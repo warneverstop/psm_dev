@@ -32,4 +32,6 @@ public interface IScoreService {
     int deleteById(Integer scoreId);
 
     List<ScoreInfo> selectByStudentId(Integer stuId);
+
+    List<ScoreInfo> selectPeopleAnalyse(Integer classId,String schoolYear);
 }

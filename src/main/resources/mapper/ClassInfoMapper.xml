@@ -61,4 +61,18 @@
     WHERE
       c.teacher_id = #{teacherId}
   </select>
+
+  <select id="selectAllByPrimaryKey" parameterType="integer" resultType="com.psm.dto.ClassInfo">
+    SELECT
+      c.*, t.teacher_name,
+      m.major_name,
+      s.stu_name
+    FROM
+      class_info c
+        LEFT JOIN teacher_info t ON c.teacher_id = t.teacher_id
+        LEFT JOIN major_info m ON c.major_id = m.major_id
+        LEFT JOIN student_info s ON c.student_id = s.stu_name
+    WHERE
+      c.class_id = #{classId}
+  </select>
 </mapper>

@@ -173,6 +173,28 @@
             </p>
         </div>
     </div>
+
+    <div class="row" style="padding-top: 30px;">
+        <table class="table table-bordered">
+            <c:forEach var="message" items="${messageList}">
+                <tr>
+                    <th style="width: 120px;">留言内容：</th>
+                    <td>${message.content}</td>
+                </tr>
+                <tr>
+                    <th colspan="2" class="text-center">回复内容</th>
+                </tr>
+                <tr>
+                    <td colspan="2" style="height: 50px;">
+                        <c:if test="${message.replyContent == null}">
+                            未回复
+                        </c:if>
+                            ${message.replyContent}
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </section>
 
 

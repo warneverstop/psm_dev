@@ -19,4 +19,6 @@ public interface ScoreInfoMapper extends Mapper<ScoreInfo> {
     ScoreInfo selectByScoreId(Integer scoreId);
 
     List<ScoreInfo> selectByStudentId(Integer stuId);
+
+    List<ScoreInfo> selectPeopleAnalyse(@Param("classId") Integer classId,@Param("schoolYear") String schoolYear);
 }

@@ -1,6 +1,7 @@
 package com.psm.service.impl;
 
 import com.psm.dto.ScoreInfo;
+import com.psm.mapper.CourseInfoMapper;
 import com.psm.mapper.ScoreInfoMapper;
 import com.psm.service.IScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class ScoreServiceImpl implements IScoreService {
 
     @Autowired
     private ScoreInfoMapper scoreInfoMapper;
+    @Autowired
+    private CourseInfoMapper courseInfoMapper;
 
 
     @Override
@@ -55,5 +58,10 @@ public class ScoreServiceImpl implements IScoreService {
     @Override
     public List<ScoreInfo> selectByStudentId(Integer stuId) {
         return scoreInfoMapper.selectByStudentId(stuId);
+    }
+
+    @Override
+    public List<ScoreInfo> selectPeopleAnalyse(Integer classId ,String schoolYear) {
+        return scoreInfoMapper.selectPeopleAnalyse(classId,schoolYear);
     }
 }

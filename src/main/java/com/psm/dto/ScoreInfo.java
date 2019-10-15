@@ -45,7 +45,26 @@ public class ScoreInfo {
     private Long stuNumber;
     @Transient
     private String stuName;
+    @Transient
+    private Integer passingNumber;
+    @Transient
+    private Integer noPassingNumber;
 
+    public Integer getPassingNumber() {
+        return passingNumber;
+    }
+
+    public void setPassingNumber(Integer passingNumber) {
+        this.passingNumber = passingNumber;
+    }
+
+    public Integer getNoPassingNumber() {
+        return noPassingNumber;
+    }
+
+    public void setNoPassingNumber(Integer noPassingNumber) {
+        this.noPassingNumber = noPassingNumber;
+    }
 
     public String getCourseName() {
         return courseName;

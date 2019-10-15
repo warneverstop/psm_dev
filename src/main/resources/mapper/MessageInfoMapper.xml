@@ -26,5 +26,6 @@
     select *
     from message_info
     where user_name = #{userName}
+    ORDER BY message_id DESC
   </select>
 </mapper>

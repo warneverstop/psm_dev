@@ -9,4 +9,6 @@ public interface ClassInfoMapper extends Mapper<ClassInfo> {
     List<ClassInfo> selectAllInfo();
 
     ClassInfo selectByTeacherId(Integer teacherId);
+
+    ClassInfo selectAllByPrimaryKey(Integer classId);
 }
